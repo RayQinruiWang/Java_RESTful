@@ -13,6 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Path("/todo")
 public class TodoService {
 	private static List<Todo> todos = new ArrayList<Todo>();
@@ -52,6 +55,32 @@ public class TodoService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String approveCC(@QueryParam("owner") String owner) {
-		return "{\"response\":\"This is test\", \"Another\": \"this is another\"}";
+		JSONObject result = new JSONObject();
+		
+		try {
+			DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/to-do_users?useSSL=false","root","admin");
+			Statement myStmt = myConn.createStatement();
+			ResultSet myRs = myStmt.executeQuery("select * from todos where owner = '" + owner +"'");
+			
+			while (myRs.next()) {
+				result.put(myRs.getString("description"), myRs.getString("category"));
+			}
+		}
+		catch(Exception exc) {
+			exc.printStackTrace();
+		}
+		
+/*		try {
+			result.put("First description", "category1");
+			result.put("Second description", "category2");
+			result.put("Third description", "category3");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		System.out.println(result.toString());
+		return result.toString();
 	}
 }
