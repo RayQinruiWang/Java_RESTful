@@ -1,4 +1,4 @@
-package test;
+package todoServices;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,11 +13,11 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
-@Path("/todo")
-public class TodoService {
+@Path("/gettodo")
+public class GetTodoService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String approveCC(@QueryParam("owner") String owner) {
+	public String retrieveToDo(@QueryParam("owner") String owner) {
 		JSONObject result = new JSONObject();
 		
 		try {
@@ -36,4 +36,6 @@ public class TodoService {
 
 		return result.toString();
 	}
+	
+	// Add a delete/post request to delete to-do from API
 }
