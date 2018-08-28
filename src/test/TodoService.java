@@ -26,32 +26,7 @@ public class TodoService {
 		String response = "<?xml version='1.0'?> <hello>Hello XML</hello>";
 		return response;
 	}
-	
-/*	// response to GET, produces HTML
-	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String approveCC(@QueryParam("owner") String owner) {
-		String temp = "";
-		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
-			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/to-do_users?useSSL=false","root","admin");
-			Statement myStmt = myConn.createStatement();
-			ResultSet myRs = myStmt.executeQuery("select * from todos where owner = '" + owner +"'");
-			todos.clear();
-			
-			while (myRs.next()) {
-				temp = temp + "<h2>" + myRs.getString("description") + myRs.getString("category")+myRs.getString("owner") +"</h2></br>";
-				todos.add(new Todo(myRs.getString("description"),
-									myRs.getString("category"),
-									myRs.getString("owner")));
-			}
-		}
-		catch(Exception exc) {
-			exc.printStackTrace();
-		}
-		return "<html><h1>We've reached here: " + owner + "<h1></br>" + temp + "</html>";
-	}
-*/
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String approveCC(@QueryParam("owner") String owner) {
@@ -70,15 +45,6 @@ public class TodoService {
 		catch(Exception exc) {
 			exc.printStackTrace();
 		}
-		
-/*		try {
-			result.put("First description", "category1");
-			result.put("Second description", "category2");
-			result.put("Third description", "category3");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		
 		System.out.println(result.toString());
 		return result.toString();
